@@ -78,7 +78,7 @@ public class CSC499Part1 {
 
     //Sorts and merges the two halves of the array
     static void merge(String[] names, String[] temp, int left, int right, int size) {
-        int leftEnd = right - 1;//End of the left half of array
+        int middle = right - 1;//End of the left half of array
         int tempPos = left;//Temporary position used when copying and sorting array
         int currentSize = size - left + 1; //size of current halves, used to copy back to original array
 

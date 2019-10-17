@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.File;
@@ -31,7 +30,7 @@ public class CSC499Part1 {
             System.out.println(
                     "Unable to open file '"
                     + fileName + "'");
-        } catch (IOException ex) {
+        } catch (IOException ex) {//Throws error when file can't be read
             System.out.println(
                     "Error reading file '"
                     + fileName + "'");
@@ -79,25 +78,24 @@ public class CSC499Part1 {
 
     //Sorts and merges the two halves of the array
     static void merge(String[] names, String[] temp, int left, int right, int size) {
-        int leftEnd = right - 1;//End of the left half of array
+        int middle = right - 1;//End of the left half of array
         int tempPos = left;//Temporary position used when copying and sorting array
         int currentSize = size - left + 1; //size of current halves, used to copy back to original array
 
         //Sorts the Array
         while (right <= size && left <= leftEnd) {
-            if (names[left].length() < names[right].length()) {
+            if (names[left].length() < names[right].length()) 
                 temp[tempPos++] = names[left++];
-            } else {
+            else 
                 temp[tempPos++] = names[right++];
-            }
         }
 
-        //Copies left side of array
+        //Copy any remaining elements in the left half
         while (left <= leftEnd) {
             temp[tempPos++] = names[left++];
         }
 
-        //Copies right side
+        //Copy any remaining elements in the right half
         while (right <= size) {
             temp[tempPos++] = names[right++];
         }
@@ -110,23 +108,26 @@ public class CSC499Part1 {
     }
 
     public static void main(String[] args) throws Exception {
-        Scanner in = new Scanner(System.in);
         String fileName, res;
+        //Runs indefinitely to allow the user to sort as many files as needed
         while (true) {
             System.out.println("Enter file directory to sort file: ");//User enters a file directory to select what file they want sorted
             fileName = in.nextLine();
-            int lineNum = getFileSize(fileName);
-            String[] names = getList(lineNum, fileName);
+            int lineNum = getFileSize(fileName); // Grabs filesize of user's inputted file
+            String[] names = getList(lineNum, fileName); // Grabs the list of words from inputted file to sort
             String[] tempNames = new String[lineNum];
             mergeSortList(names, 0, lineNum - 1, tempNames);
+            
+            //Overrides built in array sort function to only sort them if they are equal in length
             Arrays.sort(names, (String a, String b) -> {
                 if (a.length() == b.length()) {
                     return a.compareTo(b);
                 }
                 return 0;
             });
-            for (int i = 0; i < names.length; i++) {
-                System.out.println(names[i]);
+            
+            for (String name : names) {
+                System.out.println(name);
             }
             System.out.println("");
         }

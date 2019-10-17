@@ -83,7 +83,7 @@ public class CSC499Part1 {
         int currentSize = size - left + 1; //size of current halves, used to copy back to original array
 
         //Sorts the Array
-        while (right <= size && left <= leftEnd) {
+        while (right <= size && left <= middle) {
             if (names[left].length() < names[right].length()) 
                 temp[tempPos++] = names[left++];
             else 
@@ -91,7 +91,7 @@ public class CSC499Part1 {
         }
 
         //Copy any remaining elements in the left half
-        while (left <= leftEnd) {
+        while (left <= middle) {
             temp[tempPos++] = names[left++];
         }
 
@@ -108,6 +108,7 @@ public class CSC499Part1 {
     }
 
     public static void main(String[] args) throws Exception {
+        Scanner in = new Scanner(System.in);
         String fileName, res;
         //Runs indefinitely to allow the user to sort as many files as needed
         while (true) {

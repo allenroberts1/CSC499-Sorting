@@ -1,11 +1,11 @@
 import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.io.FileNotFoundException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class CSC499Part1 {
 
@@ -65,72 +65,42 @@ public class CSC499Part1 {
         return numOfLines;
     }
 
-    //Uses merge sort to sort the names by length
-    static void mergeSortList(String[] names, int l, int r, String[] temp) {
-        if (l < r) {
-            int mid = (l + r) / 2;
-            mergeSortList(names, l, mid, temp);//Splits up the array into halves
-            mergeSortList(names, mid + 1, r, temp);
-            merge(names, temp, l, mid + 1, r);//Calls function to 
-
-        }
-    }
-
-    //Sorts and merges the two halves of the array
-    static void merge(String[] names, String[] temp, int left, int right, int size) {
-        int middle = right - 1;//End of the left half of array
-        int tempPos = left;//Temporary position used when copying and sorting array
-        int currentSize = size - left + 1; //size of current halves, used to copy back to original array
-
-        //Sorts the Array
-        while (right <= size && left <= middle) {
-            if (names[left].length() < names[right].length()) 
-                temp[tempPos++] = names[left++];
-            else 
-                temp[tempPos++] = names[right++];
-        }
-
-        //Copy any remaining elements in the left half
-        while (left <= middle) {
-            temp[tempPos++] = names[left++];
-        }
-
-        //Copy any remaining elements in the right half
-        while (right <= size) {
-            temp[tempPos++] = names[right++];
-        }
-
-        //Copies temporary array back to original
-        for (int i = 0; i < currentSize; i++) {
-            names[size] = temp[size];
-            size--;
-        }
-    }
-
-    public static void main(String[] args) throws Exception {
-        Scanner in = new Scanner(System.in);
-        String fileName, res;
-        //Runs indefinitely to allow the user to sort as many files as needed
-        while (true) {
-            System.out.println("Enter file directory to sort file: ");//User enters a file directory to select what file they want sorted
-            fileName = in.nextLine();
-            int lineNum = getFileSize(fileName); // Grabs filesize of user's inputted file
-            String[] names = getList(lineNum, fileName); // Grabs the list of words from inputted file to sort
-            String[] tempNames = new String[lineNum];
-            mergeSortList(names, 0, lineNum - 1, tempNames);
-            
-            //Overrides built in array sort function to only sort them if they are equal in length
-            Arrays.sort(names, (String a, String b) -> {
-                if (a.length() == b.length()) {
-                    return a.compareTo(b);
-                }
-                return 0;
-            });
-            
-            for (String name : names) {
-                System.out.println(name);
+    static void writeToFile(String[] names) {
+        try {
+            PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
+            writer.print(names[0]);
+            for (int i = 1; i < names.length - 1; i++) {
+                writer.println(names[i]);
             }
-            System.out.println("");
+            writer.print(names[names.length - 1]);
+            writer.close();
+        } catch (IOException ex) {
+            System.out.println(
+                    "Error writing to file");
+
         }
+    }
+
+    public static void main(String[] args) {
+        String fileName, res;
+        fileName = "C:\\Users\\coryr\\Desktop\\CSC499Part1\\Sort Me.txt";
+        int lineNum = getFileSize(fileName); // Grabs filesize of the inputted file
+        String[] names = getList(lineNum, fileName); // Grabs the list of words from inputted file to sort
+        String[] tempNames = new String[lineNum];
+
+        //Overrides built in function to sort by length of string
+        Arrays.sort(names, (String a, String b) -> {
+            return a.length() - b.length();
+        });
+
+        //Overrides built in array sort function to only sort them alphabetically if they are equal in length
+        Arrays.sort(names, (String a, String b) -> {
+            if (a.length() == b.length()) {
+                return a.compareTo(b);
+            }
+            return 0;
+        });
+        writeToFile(names);
+        System.out.println("Write Successful");
     }
 }

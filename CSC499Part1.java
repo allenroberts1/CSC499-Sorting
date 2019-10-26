@@ -80,7 +80,7 @@ public class CSC499Part1 {
         } catch (IOException ex) {
             System.out.println(
                     "Error writing to file");
-
+            System.exit(1);
         }
     }
 
@@ -109,28 +109,28 @@ public class CSC499Part1 {
     
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        String fileName, res;
+        String fileName, res, outputFile;
         File file = null;
         
         if(args.length == 0){
             System.out.println("Enter directory of file to be sorted:");
             fileName = in.nextLine(); 
             file = new File(fileName);
+            System.out.println("Enter directory and name for output file:");
+            outputFile = in.nextLine();
         }else{
             fileName = args[0]; 
             file = new File(args[0]);
+            outputFile = args[1];
         }
         if (!file.exists()) {
             System.out.println("File does not exist");
-            System.exit(1);
-            
+            System.exit(1);   
         }
-        //fileName = "C:\\Users\\coryr\\Desktop\\CSC499Part1\\src\\Sort Me.txt";
         int lineNum = getFileSize(file); // Grabs filesize of the inputted file
         String[] names = getList(lineNum, fileName); // Grabs the list of words from inputted file to sort
         sortList(names);
-        writeToFile(names, args[1]);
+        writeToFile(names, outputFile);
         System.out.println("Write Successful");
     }
 }
-

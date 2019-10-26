@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class CSC499Part1 {
 
@@ -30,6 +31,7 @@ public class CSC499Part1 {
             System.out.println(
                     "Unable to open file '"
                     + fileName + "'");
+            
         } catch (IOException ex) {//Throws error when file can't be read
             System.out.println(
                     "Error reading file '"
@@ -40,11 +42,11 @@ public class CSC499Part1 {
     }
 
     //Gets the number of lines from the given file. Takes filename
-    static int getFileSize(String fileName) {
+    static int getFileSize(File file) {
         int numOfLines = 0;
         try {
 
-            File file = new File(fileName);
+           
             if (file.exists()) {
 
                 FileReader fr = new FileReader(file);
@@ -59,15 +61,16 @@ public class CSC499Part1 {
         } catch (IOException ex) {
             System.out.println(
                     "Error reading file '"
-                    + fileName + "'");
+                    + file + "'");
 
         }
         return numOfLines;
     }
 
-    static void writeToFile(String[] names) {
+    //Writes newly sorted array to file
+    static void writeToFile(String[] names, String outputDir) {
         try {
-            PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
+            PrintWriter writer = new PrintWriter(outputDir+".txt", "UTF-8");
             writer.print(names[0]);
             for (int i = 1; i < names.length - 1; i++) {
                 writer.println(names[i]);
@@ -81,26 +84,53 @@ public class CSC499Part1 {
         }
     }
 
-    public static void main(String[] args) {
-        String fileName, res;
-        fileName = "C:\\Users\\coryr\\Desktop\\CSC499Part1\\Sort Me.txt";
-        int lineNum = getFileSize(fileName); // Grabs filesize of the inputted file
-        String[] names = getList(lineNum, fileName); // Grabs the list of words from inputted file to sort
-        String[] tempNames = new String[lineNum];
-
-        //Overrides built in function to sort by length of string
+    //Sorts the names by length
+    static void sortLength(String[] names){
         Arrays.sort(names, (String a, String b) -> {
             return a.length() - b.length();
         });
-
-        //Overrides built in array sort function to only sort them alphabetically if they are equal in length
+    }
+    
+    //Sorts names that are the same length alphabetically
+    static void sortAlphabetically(String[] names){
         Arrays.sort(names, (String a, String b) -> {
             if (a.length() == b.length()) {
                 return a.compareTo(b);
             }
             return 0;
         });
-        writeToFile(names);
+    }
+    
+    static void sortList (String[] names){
+        sortLength(names);
+        sortAlphabetically(names);
+        
+    }
+    
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String fileName, res;
+        File file = null;
+        
+        if(args.length == 0){
+            System.out.println("Enter directory of file to be sorted:");
+            fileName = in.nextLine(); 
+            file = new File(fileName);
+        }else{
+            fileName = args[0]; 
+            file = new File(args[0]);
+        }
+        if (!file.exists()) {
+            System.out.println("File does not exist");
+            System.exit(1);
+            
+        }
+        //fileName = "C:\\Users\\coryr\\Desktop\\CSC499Part1\\src\\Sort Me.txt";
+        int lineNum = getFileSize(file); // Grabs filesize of the inputted file
+        String[] names = getList(lineNum, fileName); // Grabs the list of words from inputted file to sort
+        sortList(names);
+        writeToFile(names, args[1]);
         System.out.println("Write Successful");
     }
 }
+

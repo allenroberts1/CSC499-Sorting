@@ -4,7 +4,7 @@
 
 
 **How To run sort:**
-To run the source code, open the java file in any Java based IDE or run it through the command line. If through command line enter like this **java CSC499Part1 "(Input File Directory)" "(Name for output file)"**. If you run through IDE you will be prompted to enter a file directory for input and a file directory for output. Your inputs should be the file directories to the input file and where you want your output file to be located, if you want your output file to be in the same directory as the java file just enter a name.
+To run the source code, open the java file in any Java based IDE or run it through the command line. If through command line enter like this **java CSC499Part1 "(Input File Directory)" "(Name for output file)"**. If you run through IDE you will be prompted to enter a file directory for input and a file directory for output. Your inputs should be the file directories to the input file and name for output file, which will be outputted in the same directory as the java file.
 
 **How To run test:**
 Download and run the test.bat file, if any errors occur see troubleshooting

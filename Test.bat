@@ -1,5 +1,5 @@
 cd src
-javac CSC499Part1.java
-java CSC499Part1
+javac Sorting.java
+java Sorting
 fc output.txt SortedText.txt
 PAUSE 

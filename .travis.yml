@@ -1,3 +1,5 @@
+before_install:
+  - cd java
 language: java
 rvm:
  - 1.8

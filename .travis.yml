@@ -3,7 +3,6 @@ addons:
   apt:
     packages:
       - oracle-java8-installer
-mvn test -B
 script:
   - javac CSC499Part1.java
   - java CSC499Part1

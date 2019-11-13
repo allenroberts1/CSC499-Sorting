@@ -1,4 +1,4 @@
 language: java
 script:
   - javac CSC499Part1.java
-  - java CSC499Part1
+  - sh Test.sh

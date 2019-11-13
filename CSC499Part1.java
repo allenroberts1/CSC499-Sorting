@@ -144,7 +144,7 @@ public class CSC499Part1 {
             }
         }
         //Checks if file exists
-        checkFile(false);
+        checkFile(file);
 
         int lineNum = getFileSize(file); // Grabs filesize of the inputted file
         String[] names = getList(lineNum, fileName); // Grabs the list of words from inputted file to sort

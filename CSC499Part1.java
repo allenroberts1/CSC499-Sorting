@@ -131,7 +131,6 @@ public class CSC499Part1 {
         String fileName = "", outputFile = "";
         char order = 'a';
         File file = null;
-        System.out.println(args.length);
         //If program is ran through IDE
         if (args.length == 0) {
             System.out.println("Entered no arguments");
@@ -144,7 +143,6 @@ public class CSC499Part1 {
                 order = args[2].charAt(0);//If incorrect input Ascending order is assumed
             }
         }
-        System.out.println(order);
         //Checks if file exists
         checkFile(file);
 
